@@ -11,7 +11,7 @@ export class LoginUserUseCase {
     private readonly jwtService: JWTService
   ){}
 
-  async excecute(loginUserDto: LoginUserDto): Promise<{token: string }> {
+  async execute(loginUserDto: LoginUserDto): Promise<{token: string }> {
     const userExist = await this.userRepository.getByEmail(loginUserDto.email)
 
     if(!userExist) throw new UnauthorizedException(`password or email incorrect`)
