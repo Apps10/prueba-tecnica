@@ -1,8 +1,11 @@
-import { UnauthorizedException } from "../../domain/exceptions/user.exceptions";
+import { Injectable } from "src/contexts/shared/dependency-injection/injectable";
+import { UserUnauthorizedException  } from "../../domain/exceptions/user.exceptions";
 import { UserRepository } from "../../domain/repositories/user.repository";
 import { JWTService } from "../../domain/services/jwt";
 import { PasswordHasher } from "../../domain/services/password-hasher";
 import { LoginUserDto } from "./login-user.dto";
+
+@Injectable()
 
 export class LoginUserUseCase {
   constructor(
@@ -14,16 +17,15 @@ export class LoginUserUseCase {
   async execute(loginUserDto: LoginUserDto): Promise<{token: string }> {
     const userExist = await this.userRepository.getByEmail(loginUserDto.email)
 
-    if(!userExist) throw new UnauthorizedException(`password or email incorrect`)
-    
-    const { password: passwordEncripted, id } =  userExist.toJson()
-
-    if(!this.passwordHasher.compare(loginUserDto.password, passwordEncripted)) {
-      throw new UnauthorizedException(`password or email incorrect`)
+    if (
+      !userExist || 
+      !(await this.passwordHasher.compare(loginUserDto.password, userExist.password))
+    ) {
+      throw new UserUnauthorizedException(`password or email incorrect`)
     }
 
     return {
-      token: await this.jwtService.sign({ id })
+      token: await this.jwtService.sign({ id: userExist.id })
     }
 
   }

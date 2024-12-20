@@ -1,7 +1,8 @@
 import { Module } from '@nestjs/common';
+import { AuthenticationModule } from './contexts/authentication/infraestructure/authentication.module';
 
 @Module({
-  imports: [],
+  imports: [AuthenticationModule],
   controllers: [],
   providers: [],
 })

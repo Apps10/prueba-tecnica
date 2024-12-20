@@ -1,20 +1,25 @@
-import Joi from 'joi'
-import joi from 'joi'
+import 'dotenv'
+import * as Joi from 'joi'
 
 interface Envs {
-  DATABASE_URL: string
+  DATABASE_URL: string,
+  JWT_SECRET: string
 }
 
-const schema = joi.object({ 
+const schema = Joi.object({ 
   DATABASE_URL: Joi.string().required(),
+  JWT_SECRET: Joi.string().required()
 }).unknown(true)
 
 const { error, value } = schema.validate(process.env)
 
-if(error) {
+if (error) {
   throw new Error(error.message)
 }
 
 const envs: Envs = value
 
-export default envs
+export default {
+  DATABASE_URL: envs.DATABASE_URL,
+  JWT_SECRET: envs.JWT_SECRET
+}
