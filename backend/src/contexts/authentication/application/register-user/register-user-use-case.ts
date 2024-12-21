@@ -19,7 +19,7 @@ export class RegisterUserUseCase {
     const userExist = await this.userRepository.getByEmail(dto.email)
     
     if (userExist) {
-      throw new UserAlreadyExistException(`email already exist`)
+      throw new UserAlreadyExistException()
     }
     
     const passwordHashed =  await this.passwordHasher.hash(dto.password)

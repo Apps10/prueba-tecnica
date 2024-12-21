@@ -9,6 +9,7 @@ import { UserRepository } from '../domain/repositories/user.repository';
 import { PasswordHasher } from '../domain/services/password-hasher';
 import { JWTService } from '../domain/services/jwt';
 import { JwtAuthService } from './services/JwtAuthService';
+import { PrismaService } from 'src/contexts/shared/config/prisma-client';
 
 @Module({
   controllers: [
@@ -20,6 +21,7 @@ import { JwtAuthService } from './services/JwtAuthService';
     UserPrismaSchema,
     BcryptPasswordHasherService,
     JwtAuthService,
+    PrismaService,
     {
       provide: UserRepository,
       useExisting: UserPrismaSchema,
