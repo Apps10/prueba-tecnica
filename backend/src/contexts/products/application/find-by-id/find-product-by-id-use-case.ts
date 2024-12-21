@@ -7,7 +7,7 @@ import { ProductNotFoundException } from "../../domain/exceptions/product.except
 
 export class FindProductByIDUseCase  {
   constructor(
-    public readonly productRepository: ProductRepository,
+    private readonly productRepository: ProductRepository,
   ){}
 
   async execute(id: number) : Promise< Product >{

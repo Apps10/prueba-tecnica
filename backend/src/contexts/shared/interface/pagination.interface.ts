@@ -1,4 +1,4 @@
-export class IPagination {
-  start: number 
-  offset: number 
+export interface IPagination {
+  page?: number
+  limit?: number
 }

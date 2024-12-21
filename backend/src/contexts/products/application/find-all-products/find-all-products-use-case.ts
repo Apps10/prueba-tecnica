@@ -4,10 +4,9 @@ import { FindAllProductsDto } from "./find-all-products.dto";
 import { Product } from "../../domain/entities/product";
 
 @Injectable()
-
 export class FindAllProductsUseCase  {
   constructor(
-    public readonly productRepository: ProductRepository,
+    private readonly productRepository: ProductRepository,
   ){}
 
   async execute(findAllProductDto: FindAllProductsDto) : Promise<Product[] >{

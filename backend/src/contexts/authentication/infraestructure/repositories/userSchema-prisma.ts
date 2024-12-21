@@ -1,7 +1,5 @@
-import { OnModuleInit } from '@nestjs/common';
 import { UserRepository } from '../../domain/repositories/user.repository';
 import { User } from '../../domain/entities/user';
-import { PrismaClient } from '@prisma/client';
 import { Injectable } from 'src/contexts/shared/dependency-injection/injectable';
 import { PrismaService } from 'src/contexts/shared/config/prisma-client';
 

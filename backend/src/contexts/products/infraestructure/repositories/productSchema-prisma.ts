@@ -1,5 +1,3 @@
-import { OnModuleInit } from '@nestjs/common';
-import { PrismaClient } from '@prisma/client';
 import { Injectable } from 'src/contexts/shared/dependency-injection/injectable';
 import { ProductRepository } from '../../domain/repositories/product.repository';
 import { IFindAllProductsDto } from '../../application/find-all-products/find-all-products.interface';
@@ -17,7 +15,12 @@ export class ProductSchemaPrisma implements ProductRepository
   }
 
   async findAll(params: IFindAllProductsDto): Promise<Product[] | null> {
-    const products = await  this.prisma.product.findMany({ skip: params.start, take: params.offset });
+    const { page, limit } = params
+    const products = await  this.prisma.product
+      .findMany({ 
+        skip: ( page - 1 ) * limit, 
+        take: limit,
+      },);
     return products ? await products.map(p=> new Product(p)) : null
   }
 
@@ -31,4 +34,10 @@ export class ProductSchemaPrisma implements ProductRepository
   return new Product(product);
  }
 
+ async countAvaliableProducts(): Promise<number> {
+    return this.prisma.product.count({ where: { stock: {
+      gte: 1
+    } } })
+ }
+ 
 }
