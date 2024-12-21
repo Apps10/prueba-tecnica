@@ -24,14 +24,14 @@ export class ProductSchemaPrisma implements ProductRepository
     return products ? await products.map(p=> new Product(p)) : null
   }
 
- async updateStock(id: number, stock: number): Promise<Product> {
-  const product = await this.prisma.product.update({
-    where: {id},
-    data: {
-      stock
-    } 
-  });
-  return new Product(product);
+  async updateStock(id: number, stock: number): Promise<Product> {
+    const product = await this.prisma.product.update({
+      where: {id},
+      data: {
+        stock
+      } 
+    });
+    return new Product(product);
  }
 
  async countAvaliableProducts(): Promise<number> {

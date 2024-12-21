@@ -33,3 +33,49 @@ model Product {
   stock         Int
   price         Float
 }
+
+
+enum OrderStatus {
+  PENDING
+  PAID
+  DELIVERED
+  CANCELLED
+}
+
+model Order {
+  id              String        @id @default(uuid())      
+  totalAmount     Float
+
+  status          OrderStatus   @default(PENDING)
+  paitAt          DateTime?
+  wompiChargeId   String?
+
+  createdAt       DateTime      @default(now())
+  updatedAt       DateTime      @updatedAt
+  
+  OrderItem       OrderItem[]
+
+  OrderReceipt    OrderReceipt?
+}
+
+model OrderItem {
+  id              String        @id @default(uuid())      
+  productId       Int
+  quantity        Int
+  price           Float
+
+  orderId         String?
+  Order           Order?       @relation(fields: [orderId], references: [id])
+}
+
+model OrderReceipt {
+  id              String        @id @default(uuid())      
+  order           Order         @relation(fields: [orderId], references: [id])
+  orderId         String        @unique
+  
+  receiptUrl      String
+
+  createdAt       DateTime      @default(now())
+  updatedAt       DateTime      @updatedAt
+  
+}
