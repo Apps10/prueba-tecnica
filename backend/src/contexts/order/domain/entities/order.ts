@@ -75,4 +75,18 @@ export class Order {
       OrderReceipt: this.OrderReceipt,
     }
   }
+
+  toJSON(){
+    return {
+      id: this.id,
+      totalAmount: this.totalAmount,
+      status: this.status,
+      paitAt: this.paitAt,
+      wompiChargeId: this.wompiChargeId,
+      OrderItem: this.OrderItem,
+      OrderReceipt: this.OrderReceipt,
+      createdAt: this.createdAt,
+      updatedAt: this.updatedAt 
+    }
+  }
 }
