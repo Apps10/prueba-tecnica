@@ -1,4 +1,3 @@
-import { Injectable } from "src/contexts/shared/dependency-injection/injectable";
 import { UserUnauthorizedException  } from "../../domain/exceptions/user.exceptions";
 import { UserRepository } from "../../domain/repositories/user.repository";
 import { JWTService } from "../../domain/services/jwt";

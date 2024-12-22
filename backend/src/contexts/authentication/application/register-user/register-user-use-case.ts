@@ -1,5 +1,4 @@
-import { Injectable } from 'src/contexts/shared/dependency-injection/injectable';
-import { PrimitiveUser, User } from '../../domain/entities/user';
+import { User } from '../../domain/entities/user';
 import { UserRepository } from '../../domain/repositories/user.repository';
 import { RegisterUserDto } from './register-user.dto';
 import { PasswordHasher } from '../../domain/services/password-hasher';
