@@ -57,8 +57,8 @@ export const login = createAsyncThunk(
   async (data, { rejectWithValue }) => {
     try {
       const res = await axiosInstance.post("/auth/login", data);
-      toast.success(`Welcome Back ${res.data.body.User.fullname}!!!`);
-      return res.data.body.User;
+      toast.success(`Welcome Back ${res.data.user.fullName}!!!`);
+      return res.data.user
     } catch (err) {
       const { message } = err.response.data;
       console.log(err);
@@ -79,6 +79,7 @@ const authSlice = createSlice({
       })
       .addCase(checkAuth.fulfilled, (state, action) => {
         state.authUser = action.payload;
+        console.log(action);
         state.isCheckingAuth = false;
       })
       .addCase(checkAuth.rejected, (state) => {

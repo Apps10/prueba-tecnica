@@ -4,18 +4,18 @@ import {
   KeyRound,
   Loader2,
   Mail,
-  MessageSquare,
   ShoppingBag
 } from "lucide-react";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { AuthImagePattern } from "../components/AuthImagePattern";
 import { useAuthStore } from "../redux/hooks/useAuthStore";
 import toast from "react-hot-toast";
 import Joi from "joi-browser";
 
 export const LoginPage = () => {
-  const { isLoggingIng,  authUser ,isLoggingIn, loginAction  } = useAuthStore();
-  
+  const { isLoggingIng , loginAction  } = useAuthStore();
+
+
   const [showPassword, setShowPassword] = useState(false);
   const [formData, setFormData] = useState({
     email: "",
