@@ -1,4 +1,4 @@
-import { User } from '../../domain/entities/user';
+import { User, UserToApiJSON } from '../../domain/entities/user';
 import { UserRepository } from '../../domain/repositories/user.repository';
 import { RegisterUserDto } from './register-user.dto';
 import { PasswordHasher } from '../../domain/services/password-hasher';
@@ -13,7 +13,7 @@ export class RegisterUserUseCase {
     private readonly jwtService: JWTService,
   ) {}
 
-  async execute(dto: RegisterUserDto): Promise<{ token: string }> {
+  async execute(dto: RegisterUserDto): Promise<{ token: string, user: UserToApiJSON }> {
     const userExist = await this.userRepository.getByEmail(dto.email)
     
     if (userExist) {
@@ -30,7 +30,8 @@ export class RegisterUserUseCase {
 
     await this.userRepository.create(user);
     return {
-      token: await this.jwtService.sign({ id: user.id })
+      token: await this.jwtService.sign({ id: user.id }),
+      user: userExist.toApiJson()
     };
   }
 }
