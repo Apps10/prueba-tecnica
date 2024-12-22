@@ -1,11 +1,9 @@
-import { Injectable } from "src/contexts/shared/dependency-injection/injectable";
 import { UserUnauthorizedException  } from "../../domain/exceptions/user.exceptions";
 import { UserRepository } from "../../domain/repositories/user.repository";
 import { JWTService } from "../../domain/services/jwt";
 import { PasswordHasher } from "../../domain/services/password-hasher";
 import { LoginUserDto } from "./login-user.dto";
 
-@Injectable()
 
 export class LoginUserUseCase {
   constructor(

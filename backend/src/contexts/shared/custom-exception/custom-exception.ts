@@ -5,7 +5,7 @@ export const createCustomException = (name: string, statusCode: number, defaultM
 
     constructor(message: string = ''){
       super(name);
-      this.messageError = message ?? defaultMessage;
+      this.messageError = message || defaultMessage;
       this.statusCode = statusCode;
     }
   }

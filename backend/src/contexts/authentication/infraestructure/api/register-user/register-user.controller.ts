@@ -12,22 +12,9 @@ export class RegisterUserController {
   async run(
     @Body() registerUserHttpDto: RegisterUserHttpDto,
   ): Promise<{ token: string }> {
-    try{
       return await this.registerUserUseCase.execute({
         ...registerUserHttpDto,
       });
-    } catch(error){
-      if (
-        error instanceof UserAlreadyExistException ||
-        error instanceof UserNotFoundException
-      ) {
-        throw new BadRequestException(error)
-      }
-      if (error instanceof UserUnauthorizedException){
-        throw new UnauthorizedException(error)
-      }
-
-      throw new Error(error)
-    }
+    
   }
 }

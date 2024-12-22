@@ -1,7 +1,7 @@
 import { Injectable } from "src/contexts/shared/dependency-injection/injectable";
 import { UpdateProductStockDto } from "./update-product-stock.dto";
 import { ProductRepository } from "../../domain/repositories/product.repository";
-import { ProductNotFoundException, ProductWithoutStock } from "../../domain/exceptions/product.exceptions";
+import { ProductNotFoundException, ProductWithoutStockException,  } from "../../domain/exceptions/product.exceptions";
 
 @Injectable()
 export class updateProductStockUseCase {
@@ -18,7 +18,7 @@ export class updateProductStockUseCase {
 
     const newStock = product.stock -  quantityToSubtract
     if (newStock < 0) {
-      throw new ProductWithoutStock()
+      throw new ProductWithoutStockException()
     }
 
     return this.productRepository.updateStock(id, newStock)

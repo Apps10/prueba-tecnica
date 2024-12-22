@@ -13,15 +13,8 @@ export class LoginUserController {
   async run(
     @Body() loginUserHttpDto: LoginUserHttpDto,
   ): Promise<{ token: string }> {
-    try{
-      return await this.loginUserUseCase.execute({
-        ...loginUserHttpDto
-      });
-
-    }catch(error){
-      if(error instanceof UserUnauthorizedException){
-        throw new UnauthorizedException(error)
-      }
-    }
+    return await this.loginUserUseCase.execute({
+      ...loginUserHttpDto
+    });
   }
 }
