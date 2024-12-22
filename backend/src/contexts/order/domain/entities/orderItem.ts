@@ -1,46 +1,44 @@
+import { Product } from "src/contexts/products/domain/entities/product"
 import { Order } from "./order"
 
-interface PrimitiveOrderItem {
-  id: string  
-  productId: number
+export interface PrimitiveOrderItem {
+  id?: string  
+  productId: number,
   quantity: number
   price: number
-  orderId: string
-  Order: Order
+  order?: Order
 }
 
 export class OrderItem {
   private readonly id: string              
-  private readonly productId: number
+  private readonly productId: number;
   private readonly quantity: number
   private readonly price: number
-  private readonly orderId: string
-  private readonly Order: Order
+  private readonly order: Order
   
   constructor({
-    Order,
     id,
-    orderId,
+    order,
     price,
     productId,
     quantity
-  }: PrimitiveOrderItem) {
+  }: OrderItem) {
     this.id=id
-    this.orderId=orderId
     this.price=price
     this.productId=productId
-    this.Order=Order
     this.quantity = quantity
+    this.order=order
   }
   
   toApiJSON(){
     return {
       id: this.id,
-      orderId: this.orderId,
       price: this.price,
       productId: this.productId,
-      Order: this.Order,
+      order: this.order,
       quantity: this.quantity
     }
   }
+
+  
 }

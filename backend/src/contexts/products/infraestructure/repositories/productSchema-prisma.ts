@@ -3,6 +3,7 @@ import { ProductRepository } from '../../domain/repositories/product.repository'
 import { IFindAllProductsDto } from '../../application/find-all-products/find-all-products.interface';
 import { Product } from '../../domain/entities/product';
 import { PrismaService } from 'src/contexts/shared/config/prisma-client';
+import { ProductNotFoundException } from '../../domain/exceptions/product.exceptions';
 
 @Injectable()
 export class ProductSchemaPrisma implements ProductRepository 
@@ -38,6 +39,24 @@ export class ProductSchemaPrisma implements ProductRepository
     return this.prisma.product.count({ where: { stock: {
       gte: 1
     } } })
+ }
+
+ async validateProductsId(ids: number[]): Promise<Product[]> {
+  ids: Array.from(new Set(ids)) //elimina los items duplicados
+  const products = await this.prisma.product.findMany({
+    where: {
+      id: {
+        in: ids,
+
+      }
+    }
+  })
+  
+  if (products.length !== ids.length ){
+    throw new ProductNotFoundException('Some Products were not found')
+  }
+
+  return products.map(p=>new Product(p));
  }
  
 }

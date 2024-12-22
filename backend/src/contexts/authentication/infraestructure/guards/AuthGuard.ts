@@ -1,6 +1,7 @@
 import { Injectable, CanActivate, ExecutionContext } from '@nestjs/common';
 import { JwtAuthService } from '../services/JwtAuthService';
 import { Request } from 'express';
+import { UserUnauthorizedException } from '../../domain/exceptions/user.exceptions';
 
 @Injectable()
 export class AuthGuard implements CanActivate {
@@ -10,23 +11,19 @@ export class AuthGuard implements CanActivate {
     const request = context.switchToHttp().getRequest();
     const token = this.extractTokenFromHeader(request);
 
-    if (!token) {
-      return false;
-    }
-
     try {
       const payload = await this.jwtAuthService.verify(token);
-      request.user = payload; // Adjunta el usuario a la petición
+      request.userId = payload.id; // Adjunta el usuario a la petición
       return true;
-    } catch {
-      return false;
+    } catch(error) {
+      throw new UserUnauthorizedException();
     }
   }
 
   private extractTokenFromHeader(request: Request): string | null {
     const authHeader = request.headers.authorization;
     if (authHeader && authHeader.startsWith('Bearer ')) {
-      return authHeader.split(' ')[1];
+      return authHeader.split(' ')[1]? authHeader.split(' ')[1]: null;
     }
     return null;
   }

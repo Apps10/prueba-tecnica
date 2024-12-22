@@ -2,9 +2,9 @@ import { PrimitiveOrderItem } from "../../domain/entities/orderItem";
 import { PrimitiveProduct } from "src/contexts/products/domain/entities/product";
 
 
-export class CreateOrderDto {
+export interface ICreateOrderDto {
     totalAmount: number
     items: PrimitiveOrderItem[]
-    itemsFromDb: PrimitiveProduct[]
-    customerId: string
+    itemsFromDb: PrimitiveProduct[],
+    customerId: String
 }

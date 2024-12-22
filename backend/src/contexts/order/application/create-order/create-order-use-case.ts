@@ -1,27 +1,35 @@
+import { ProductRepository } from "src/contexts/products/domain/repositories/product.repository";
 import { OrderShouldHaveItemsException } from "../../domain/exceptions/order.exception";
-import { orderRepository } from "../../domain/repository/order.repository";
+import { OrderRepository } from "../../domain/repository/order.repository";
 import { CreateOrderHttpDto } from "../../infraestructure/api/create-order/create-order.http-dto";
 import { CreateOrderDto } from "./create-order-dto";
+import { Product } from "src/contexts/products/domain/entities/product";
+import { OrderItem } from "../../domain/entities/orderItem";
 
 export class CreateOrderUseCase {
   constructor(
-    private readonly orderRepository: orderRepository,
-    // private readonly orderRepository: orderRepository,
+    private readonly orderRepository: OrderRepository,
+    private readonly productRepository: ProductRepository,
   ) {}
 
-  async execute({items}: CreateOrderHttpDto){
+  async execute({items}: CreateOrderHttpDto, customerId: string){
     if(!items) throw new OrderShouldHaveItemsException()
-    // // const products = await this.orderRepository.validateProductsId(items.map(i=>i.productId))
+    const products = (await this.productRepository
+      .validateProductsId(items.map(i=>i.productId)))
+      .map(p=>p.toApiJson())
 
-    // const totalAmount = items.reduce((acc, orderItem) => {
-    //   // const price = products.find(product=> product.id == String(orderItem.productId)).price
-    //   return price * orderItem.quantity + acc
-    // }, 0);
+    const totalAmount = items.reduce((acc, orderItem) => {
+      const price = products.find(product=> product.id == orderItem.productId).price
+      return price * orderItem.quantity + acc
+    }, 0);
 
-    // const totalItems = items.reduce((acc, orderItem) => {
-    //   return acc + orderItem.quantity 
-    // }, 0);
-    
-    // // return this.orderRepository.create({})
+    const order=  await this.orderRepository.create({
+      itemsFromDb: products,
+      items,
+      totalAmount,
+      customerId
+    })
+
+    return order;
   }
 }

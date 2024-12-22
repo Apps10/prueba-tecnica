@@ -8,7 +8,8 @@ export class JwtAuthService {
 
   public async sign(payload: { id: string; }): Promise<string> {
     return JWT.sign(payload, envs.JWT_SECRET, {
-      algorithm: 'HS256'
+      algorithm: 'HS256',
+      expiresIn: "1hr"
     })    
   }
 

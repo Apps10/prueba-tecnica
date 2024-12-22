@@ -6,4 +6,5 @@ export abstract class  ProductRepository {
   abstract findAll(params: IFindAllProductsDto): Promise<Product[] | null>
   abstract findById(id: number): Promise<Product | null>
   abstract countAvaliableProducts(): Promise<number>
+  abstract validateProductsId(ids: number[]): Promise<Product[]>
 }
