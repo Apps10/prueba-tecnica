@@ -5,7 +5,6 @@ import { JWTService } from "../../domain/services/jwt";
 import { PasswordHasher } from "../../domain/services/password-hasher";
 import { LoginUserDto } from "./login-user.dto";
 
-@Injectable()
 
 export class LoginUserUseCase {
   constructor(

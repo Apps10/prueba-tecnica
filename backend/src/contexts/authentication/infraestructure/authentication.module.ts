@@ -25,23 +25,23 @@ import { PrismaService } from 'src/contexts/shared/config/prisma-client';
     PrismaService,
     AuthGuard,
     {
-      provide: UserRepository,
-      useExisting: UserPrismaSchema,
+      provide: LoginUserUseCase,
+      useFactory: (repository: UserRepository, passwordHasher: PasswordHasher, jwtService: JWTService ) => 
+        new LoginUserUseCase(repository, passwordHasher, jwtService),
+      inject: [UserPrismaSchema, BcryptPasswordHasherService, JwtAuthService]
     },
     {
-      provide: PasswordHasher,
-      useExisting: BcryptPasswordHasherService,
+      provide: RegisterUserUseCase,
+      useFactory: (repository: UserRepository, passwordHasher: PasswordHasher, jwtService: JWTService ) => 
+        new RegisterUserUseCase(repository, passwordHasher, jwtService),
+      inject: [UserPrismaSchema, BcryptPasswordHasherService, JwtAuthService]
     },
-    {
-      provide: JWTService,
-      useExisting: JwtAuthService,
-    },
-
   ],
   exports: [
     RegisterUserUseCase,
     LoginUserUseCase,
-    AuthGuard
+    AuthGuard,
+    JwtAuthService,
   ],
 })
 export class AuthenticationModule {}

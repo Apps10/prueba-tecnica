@@ -6,41 +6,41 @@ import { Order } from "../../domain/entities/order";
 import { orderRepository } from "../../domain/repository/order.repository";
 import { ProductNotFoundException } from "src/contexts/products/domain/exceptions/product.exceptions";
 
-export class OrderPrismaRepository implements orderRepository{
-  constructor(private readonly prisma: PrismaService) {}
+// export class OrderPrismaRepository implements orderRepository{
+//   constructor(private readonly prisma: PrismaService) {}
 
   
-  changeOrderStatus(updateOrderStatusDto: IUpdateOrderStatusDto): Promise<Order> {
-    // return this.prisma.order.update({
-    //   where: {id: updateOrderStatusDto.orderId },
-    //   data: {
-    //     status:updateOrderStatusDto.orderStatus
-    //   },
-    // })
-  }
+//   // changeOrderStatus(updateOrderStatusDto: IUpdateOrderStatusDto): Promise<Order> {
+//   //   // return this.prisma.order.update({
+//   //   //   where: {id: updateOrderStatusDto.orderId },
+//   //   //   data: {
+//   //   //     status:updateOrderStatusDto.orderStatus
+//   //   //   },
+//   //   // })
+//   // }
 
-  create({ items }: CreateOrderDto): Promise<Order> {
+//   // create({ items }: CreateOrderDto): Promise<Order> {
     
-  }
+//   // }
 
-  findOne(orderPaginationDto: IFindOrderByIdDto): Promise<Order | null> {
+//   // findOne(orderPaginationDto: IFindOrderByIdDto): Promise<Order | null> {
     
-  }
+//   // }
 
-  async validateProductsId(ids: string[]): Promise<void> {
-    ids: Array.from(new Set(ids)) //elimina los items duplicados
+//   // async validateProductsId(ids: string[]): Promise<void> {
+//   //   ids: Array.from(new Set(ids)) //elimina los items duplicados
 
-    const products = await this.prisma.order.findMany({
-      where: {
-        id: {
-          in: ids,
-        }
-      }
-    })
+//   //   const products = await this.prisma.order.findMany({
+//   //     where: {
+//   //       id: {
+//   //         in: ids,
+//   //       }
+//   //     }
+//   //   })
     
-    if (products.length !== ids.length ){
-      throw new ProductNotFoundException( 'Some Products were not found')
-    }
+//   //   if (products.length !== ids.length ){
+//   //     throw new ProductNotFoundException( 'Some Products were not found')
+//   //   }
     
-  }
-}
+//   // }
+// }

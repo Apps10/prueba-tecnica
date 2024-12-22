@@ -7,7 +7,6 @@ import { JWTService } from '../../domain/services/jwt';
 import { v4 as uuidv4 } from 'uuid';
 import { UserAlreadyExistException } from '../../domain/exceptions/user.exceptions';
 
-@Injectable()
 export class RegisterUserUseCase {
   constructor(
     private readonly userRepository: UserRepository,
