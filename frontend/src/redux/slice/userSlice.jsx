@@ -41,7 +41,6 @@ export const logout = createAsyncThunk(
   "auth/logout",
   async (_, { rejectWithValue }) => {
     try {
-      await axiosInstance.post("/auth/logout");
       toast.success("Logged out successfully");
       return null;
     } catch (err) {

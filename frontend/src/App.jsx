@@ -4,6 +4,7 @@ import { Navbar } from "./components"
 import { Toaster } from 'react-hot-toast'
 import { LoginPage } from './pages/index'
 import { useAuthStore } from './redux/hooks/useAuthStore'
+import { StorePage } from './pages/StorePage'
 
 
 function App(){
@@ -13,9 +14,9 @@ function App(){
     <div>
       <div data-theme='light'>
         <Navbar/>
-
          <Routes>
-           <Route path='/login' element={ !authUser ? <LoginPage/> : <h1>hola mundo</h1> } />
+          <Route path='/' element={ authUser ? <StorePage/> : <Navigate to="/login"/>  } />
+          <Route path='/login' element={ !authUser ? <LoginPage/> : <Navigate to="/"/> } />
          </Routes>
          <Toaster/>
         </div>
