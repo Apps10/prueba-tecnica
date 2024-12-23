@@ -11,7 +11,7 @@ const products:PrimitiveProduct[] = [
     "id": 1,
     "name": "Laptop Gamer",
     "description": "Laptop de alto rendimiento con tarjeta gráfica dedicada.",
-    "picture": "https://example.com/images/laptop-gamer.jpg",
+    "picture": "https://www.asus.com/media/Odin/Websites/global/ProductLine/20200824120814.jpg",
     "stock": 15,
     "price": 1200999
   },
@@ -19,7 +19,7 @@ const products:PrimitiveProduct[] = [
     "id": 2,
     "name": "Mouse Inalámbrico",
     "description": "Mouse ergonómico con conectividad Bluetooth.",
-    "picture": "https://example.com/images/mouse-inalambrico.jpg",
+    "picture": "https://www.quorumsystem.com.co/wp-content/uploads/2024/07/mouse-inalambrico-1000-dpi.jpg",
     "stock": 50,
     "price": 20999
   },
@@ -27,7 +27,7 @@ const products:PrimitiveProduct[] = [
     "id": 3,
     "name": "Teclado Mecánico",
     "description": "Teclado con switches mecánicos y retroiluminación RGB.",
-    "picture": "https://example.com/images/teclado-mecanico.jpg",
+    "picture": "https://lexatecnologia.com/rails/active_storage/representations/proxy/eyJfcmFpbHMiOnsiZGF0YSI6NjU4NTEsInB1ciI6ImJsb2JfaWQifX0=--5b4f2d102bba9a8a5553c599968f1a9fc5c89d56/eyJfcmFpbHMiOnsiZGF0YSI6eyJmb3JtYXQiOiJwbmciLCJyZXNpemVfdG9fZml0IjpbODAwLDgwMF19LCJwdXIiOiJ2YXJpYXRpb24ifX0=--cef66509c9cdc75663c0eefd9421db1d2ea4fead/5.png",
     "stock": 30,
     "price": 89990
   },
@@ -35,7 +35,7 @@ const products:PrimitiveProduct[] = [
     "id": 4,
     "name": "Auriculares Over-Ear",
     "description": "Auriculares con cancelación de ruido y sonido Hi-Fi.",
-    "picture": "https://example.com/images/auriculares-over-ear.jpg",
+    "picture": "https://nitrosystems.com.co/wp-content/uploads/2024/08/567567567-scaled.jpg",
     "stock": 20,
     "price": 150490
   },
@@ -43,10 +43,91 @@ const products:PrimitiveProduct[] = [
     "id": 5,
     "name": "Monitor 4K",
     "description": "Monitor Ultra HD de 27 pulgadas con tecnología IPS.",
-    "picture": "https://example.com/images/monitor-4k.jpg",
+    "picture": "https://monitores.com.co/wp-content/uploads/2022/05/Monitor-Samsung-UHD-HDR-27-Inicio-I-monitores.com_.co_.jpg",
     "stock": 10,
     "price": 340999
+  },
+  {
+    "id": 6,
+    "name": "Smartphone 5G",
+    "description": "Smartphone con pantalla AMOLED y cámara de 108 MP.",
+    "picture": "https://www.gearbest.ma/wp-content/uploads/2023/12/Blackview-A200-Pro-Unlocked-Smartphone-G99-12GB-256GB-Android-13-Phone-6-67-120HZ-AMOLED-Display.jpg_640x640-13.webp",
+    "stock": 40,
+    "price": 90000
+  },
+  {
+    "id": 7,
+    "name": "Bocina Bluetooth",
+    "description": "Bocina portátil con sonido estéreo y batería de larga duración.",
+    "picture": "https://exitocol.vtexassets.com/arquivos/ids/15300773/parlante-portatil-bocina-1hora-boc060-bluetooth-estereo-fm.jpg?v=638029388318670000",
+    "stock": 25,
+    "price": 59.99
+  },
+  {
+    "id": 8,
+    "name": "Disco Duro Externo",
+    "description": "Disco duro portátil de 2TB con conexión USB 3.0.",
+    "picture": "https://symcomputadores.com/wp-content/uploads/2022/09/Externo-HDD-4TB.png",
+    "stock": 35,
+    "price": 79.99
+  },
+  {
+    "id": 9,
+    "name": "Cámara Web Full HD",
+    "description": "Cámara web de alta definición con micrófono incorporado.",
+    "picture": "https://resource.logitech.com/w_692,c_lpad,ar_4:3,q_auto,f_auto,dpr_1.0/d_transparent.gif/content/dam/logitech/en/products/webcams/c922/gallery/c922-gallery-1.png?v=1",
+    "stock": 60,
+    "price": 39.99
+  },
+  {
+    "id": 10,
+    "name": "Smartwatch Deportivo",
+    "description": "Reloj inteligente con monitoreo de actividad física y GPS.",
+    "picture": "https://tienvir.co/cdn/shop/files/Smarwacubittnegro.jpg?v=1710192872&width=600",
+    "stock": 50,
+    "price": 149.99
+  },
+  {
+    "id": 11,
+    "name": "Tablet 10 pulgadas",
+    "description": "Tablet Android con pantalla de 10 pulgadas y 64GB de almacenamiento.",
+    "picture": "https://co.tiendasishop.com/cdn/shop/files/IMG-11087963.jpg?v=1723512028&width=823",
+    "stock": 20,
+    "price": 199.99
+  },
+  {
+    "id": 12,
+    "name": "Silla Ergonómica",
+    "description": "Silla de oficina ergonómica con soporte lumbar ajustable.",
+    "picture": "https://www.sillasparaoficina.top/wp-content/uploads/2019/08/ERGOMESH-PREMIUM-PRESIDENTE4.jpg",
+    "stock": 15,
+    "price": 219.99
+  },
+  {
+    "id": 13,
+    "name": "Proyector Full HD",
+    "description": "Proyector portátil Full HD con conectividad WiFi y Bluetooth.",
+    "picture": "https://image.benq.com/is/image/benqco/01-mh733-front30?$ResponsivePreset$&fmt=png-alpha",
+    "stock": 10,
+    "price": 349.99
+  },
+  {
+    "id": 14,
+    "name": "Cargador Inalámbrico",
+    "description": "Cargador inalámbrico rápido para dispositivos compatibles.",
+    "picture": "https://http2.mlstatic.com/D_NQ_NP_807622-MCO49630563353_042022-O.webp",
+    "stock": 75,
+    "price": 19.99
+  },
+  {
+    "id": 15,
+    "name": "Ventilador de Torre",
+    "description": "Ventilador de torre silencioso con control remoto y 3 velocidades.",
+    "picture": "https://www.kalley.com.co/medias/7701023638081-001-750Wx750H?context=bWFzdGVyfGltYWdlc3w0OTQ0MnxpbWFnZS9qcGVnfGFXMWhaMlZ6TDJnek5pOW9Zek12TVRBNU9EWTRNRGczTnpBMU9UQXVhbkJufDBhZTI5NzUxYjcyMTczOTZjZWNjZDgwOTlmNWY2Y2YzNDYzMWU4NmU3YTlmNzk1YmY0YzA4OTM1YjY0NWZjMWE",
+    "stock": 30,
+    "price": 59.99
   }
+
 ] 
 
 async function main() {
@@ -60,7 +141,7 @@ async function main() {
 
   logger.log('Seeding...');
   
-  /// --------- Users ---------------
+  /// --------- Products ---------------
   for (let i = 0; i < products.length; i++) {
     await prisma.product.create({ data: products[i] });
   }
