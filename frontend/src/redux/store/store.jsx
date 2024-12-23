@@ -2,6 +2,7 @@ import { configureStore } from "@reduxjs/toolkit";
 import { persistStore, persistReducer } from 'redux-persist';
 import storage from 'redux-persist/lib/storage'; // Usa localStorage por defecto
 import authReducer from "../slice/userSlice";
+import orderReducer from "../slice/orderSlice";
 
 
 const persistConfig = {
@@ -14,7 +15,8 @@ const AuthpersistedReducer = persistReducer(persistConfig, authReducer);
 
 const store = configureStore({
   reducer: {
-    auth: AuthpersistedReducer, //estados de aplicacion, en este caso manejara el usuario
+    auth: AuthpersistedReducer,
+    order: orderReducer 
   },
 });
 
