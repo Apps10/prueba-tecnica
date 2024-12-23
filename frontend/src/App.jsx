@@ -9,14 +9,15 @@ import { StorePage } from './pages/StorePage'
 
 function App(){
   const {  authUser } = useAuthStore();
-  console.log({authUser});
+
   return (
     <div>
       <div data-theme='light'>
         <Navbar/>
          <Routes>
-          <Route path='/' element={ authUser ? <StorePage/> : <Navigate to="/login"/>  } />
+          <Route path='/' element={ <StorePage/>  } />
           <Route path='/login' element={ !authUser ? <LoginPage/> : <Navigate to="/"/> } />
+          <Route path='/confirmOrder' element={ !authUser ? <LoginPage/> : <Navigate to="/"/> } />
          </Routes>
          <Toaster/>
         </div>
