@@ -17,6 +17,7 @@ function App(){
          <Routes>
           <Route path='/' element={ <StorePage/>  } />
           <Route path='/login' element={ !authUser ? <LoginPage/> : <Navigate to="/"/> } />
+          <Route path='/confirmOrder' element={ !authUser ? <LoginPage/> : <Navigate to="/"/> } />
          </Routes>
          <Toaster/>
         </div>

@@ -3,8 +3,8 @@ import { axiosInstance } from "../../lib/axios";
 
 const initialState = {
   productsSelected: [],
+  confirmOrderProduct: false,
 };
-
 
 export const newOrder = createAsyncThunk(
   "order/new",
@@ -23,23 +23,31 @@ const orderSlice = createSlice({
   name: "order",
   initialState,
   reducers: {
+    setconfirmProducts(state, action) {
+      state.confirmOrderProduct = action.payload;
+    },
+
     addProductsSelected(state, action) {
-      state.productsSelected.push(action.payload)
+      state.productsSelected.push(action.payload);
     },
     setProductsSelected(state, action) {
-      state.productsSelected = action.payload
+      state.productsSelected = action.payload;
     },
-    clearProductsSelected(state){
-      state.productsSelected = []
+    clearProductsSelected(state) {
+      state.productsSelected = [];
     },
-    updateProductSelected(state, action){
-      const index = state.productsSelected.findIndex(p=> p.id == action.payload.id)
-      state.productsSelected[index] = action.payload
+    updateProductSelected(state, action) {
+      const index = state.productsSelected.findIndex(
+        (p) => p.id == action.payload.id
+      );
+      state.productsSelected[index] = action.payload;
     },
-    deleteProductSelected(state, action){
-      const index = state.productsSelected.findIndex(p=> p.id == action.payload.id)
-      delete(state.productsSelected[index])
-    }
+    deleteProductSelected(state, action) {
+      const index = state.productsSelected.findIndex(
+        (p) => p.id == action.payload.id
+      );
+      delete state.productsSelected[index];
+    },
   },
   extraReducers: (builder) => {
     builder
@@ -54,9 +62,16 @@ const orderSlice = createSlice({
       .addCase(newOrder.rejected, (state) => {
         state.authUser = null;
         state.isCheckingAuth = false;
-      })
+      });
   },
 });
 
-export const { addProductsSelected , clearProductsSelected, deleteProductSelected, updateProductSelected, setProductsSelected } = orderSlice.actions;
+export const {
+  addProductsSelected,
+  clearProductsSelected,
+  deleteProductSelected,
+  updateProductSelected,
+  setProductsSelected,
+  setconfirmProducts,
+} = orderSlice.actions;
 export default orderSlice.reducer;
