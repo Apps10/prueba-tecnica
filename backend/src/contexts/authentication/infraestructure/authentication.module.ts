@@ -11,14 +11,17 @@ import { PasswordHasher } from '../domain/services/password-hasher';
 import { JWTService } from '../domain/services/jwt';
 import { JwtAuthService } from './services/JwtAuthService';
 import { PrismaService } from 'src/contexts/shared/config/prisma-client';
+import { CheckAuthUserController } from './api/check-auth-user/check-auth-user.controller';
+import { CheckAuthUserUseCase } from '../application/check-auth-user/check-auth-user.use-case';
 
 @Module({
   controllers: [
-    RegisterUserController, LoginUserController, 
+    RegisterUserController, LoginUserController, CheckAuthUserController
   ],
   providers: [
     RegisterUserUseCase,
     LoginUserUseCase,
+    CheckAuthUserUseCase,
     UserPrismaSchema,
     BcryptPasswordHasherService,
     JwtAuthService,
@@ -35,6 +38,12 @@ import { PrismaService } from 'src/contexts/shared/config/prisma-client';
       useFactory: (repository: UserRepository, passwordHasher: PasswordHasher, jwtService: JWTService ) => 
         new RegisterUserUseCase(repository, passwordHasher, jwtService),
       inject: [UserPrismaSchema, BcryptPasswordHasherService, JwtAuthService]
+    },
+    {
+      provide: CheckAuthUserUseCase,
+      useFactory: (repository: UserRepository) => 
+        new CheckAuthUserUseCase(repository),
+      inject: [UserPrismaSchema]
     },
   ],
   exports: [

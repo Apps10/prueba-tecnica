@@ -22,17 +22,18 @@ export const checkAuth = createAsyncThunk(
   }
 );
 
-export const signup = createAsyncThunk(
-  "auth/signup",
+export const signin = createAsyncThunk(
+  "auth/signin",
   async (data, { rejectWithValue }) => {
     try {
-      const res = await axiosInstance.post("/auth/signup", data);
+      const res = await axiosInstance.post("/auth/signin", data);
       toast.success("Register Successfully!!!");
       return res.data.body.User;
     } catch (err) {
-        const { error } = err.response.data;
-        toast.error(error);
-        return rejectWithValue(null);
+      const { message } = err.response.data;
+      console.log(message);
+      toast.error(message);
+      return rejectWithValue(null);
     }
   }
 );
@@ -60,7 +61,6 @@ export const login = createAsyncThunk(
       return res.data.user
     } catch (err) {
       const { message } = err.response.data;
-      console.log(err);
       toast.error(message);
       return rejectWithValue(null);
     }
@@ -85,14 +85,14 @@ const authSlice = createSlice({
         state.authUser = null;
         state.isCheckingAuth = false;
       })
-      .addCase(signup.pending, (state) => {
+      .addCase(signin.pending, (state) => {
         state.isSigningUp = true;
       })
-      .addCase(signup.fulfilled, (state, action) => {
+      .addCase(signin.fulfilled, (state, action) => {
         state.authUser = action.payload;
         state.isSigningUp = false;
       })
-      .addCase(signup.rejected, (state) => {
+      .addCase(signin.rejected, (state) => {
         state.authUser = null;
         state.isSigningUp = false;
       })

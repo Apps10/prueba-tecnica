@@ -4,8 +4,11 @@ import { ConfirmOrderModal, CreditCardModal } from "../components";
 import { useOrderStore } from "../redux/hooks/useOrderStore";
 import { CloudCog, MinusIcon, Plus, ShoppingCart, CreditCard } from "lucide-react";
 import { usePaymentStore } from "../redux/hooks/usePaymentStore";
+import { useAuthStore } from "../redux/hooks/useAuthStore";
+import { Navigate } from "react-router-dom";
 
 export const StorePage = () => {
+  const { isLoggingIng , loginAction, authUser } = useAuthStore();
 
   const { 
     addProductsSelectedAction,
@@ -139,8 +142,8 @@ export const StorePage = () => {
           <ConfirmOrderModal/>
         }
 
-        {isRegisterCreditCard && 
-          <CreditCardModal/>
+        {isRegisterCreditCard &&
+          (!authUser) ? <CreditCardModal/> : <Navigate to='/login'/>
         }
       </div>
     </div>

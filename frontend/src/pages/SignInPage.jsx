@@ -4,6 +4,7 @@ import {
   KeyRound,
   Loader2,
   Mail,
+  MessageSquare,
   ShoppingBag
 } from "lucide-react";
 import { useEffect, useState } from "react";
@@ -13,20 +14,24 @@ import toast from "react-hot-toast";
 import Joi from "joi-browser";
 import { Link } from "react-router-dom";
 
-export const LoginPage = () => {
-  const { isLoggingIng , loginAction  } = useAuthStore();
+export const SignInPage = () => {
+  const { isLoggingIng ,  loginAction,  signinAction  } = useAuthStore();
 
 
   const [showPassword, setShowPassword] = useState(false);
   const [formData, setFormData] = useState({
     email: "",
     password: "",
+    fullName: "",
+    address: ""
   });
 
   const validateForm = () => {
     
     const schema = Joi.object({
       email: Joi.string().email().required(),
+      fullName: Joi.string().max(19).required(),
+      address: Joi.string().max(40).required(),
       password: Joi.string().min(6).required(),
     });
 
@@ -45,12 +50,12 @@ export const LoginPage = () => {
   const handleSubmit = async (e) => {
     e.preventDefault();
     if (validateForm()) {
-      loginAction(formData)
+      signinAction(formData)
     }
   };
 
   return (
-    <div className="min-h-screen grid grid-cols-2">
+    <div className="pt-10 min-h-screen grid grid-cols-2">
       <div className="flex flex-col justify-center items-center p-6 sm:p-12">
         <div className="text-center mb-8">
           <div className="flex flex-col items-center gap-2 group">
@@ -58,16 +63,45 @@ export const LoginPage = () => {
               className="size-12 rounded-xl bg-primary/10 flex items-center justify-center 
                 group-hover:bg-primary/20 transition-colors"
             >
-              <ShoppingBag className="size-6 text-primary" />
+              <MessageSquare className="size-6 text-primary" />
             </div>
-            <h1 className="text-2xl font-bold mt-2">Welcome Back</h1>
+            <h1 className="text-2xl font-bold mt-2">Create Account</h1>
             <p className="text-base-content/60">
-              Sign in to your account
+              Get started with your free account
             </p>
           </div>
         </div>
         <div className="w-full max-w-md space-y-8">
-          <form  onSubmit={handleSubmit} className="space-y-6">
+          <form onSubmit={handleSubmit} className="space-y-6">
+            <label className="form-control w-full ">
+                <div className="label">
+                  <span className="label-text">Full name</span>
+                </div>
+                <input
+                  type="text"
+                  className={`input input-bordered w-full`}
+                  placeholder="pepito perez"
+                  value={formData.fullName}
+                  onChange={(e) =>
+                    setFormData({ ...formData, fullName: e.target.value })
+                  }
+                />
+            </label>
+
+            <label className="form-control w-full ">
+              <div className="label">
+                <span className="label-text">Address</span>
+              </div>
+              <input
+                type="text"
+                className={`input input-bordered w-full`}
+                placeholder="joe Doe"
+                value={formData.address}
+                onChange={(e) =>
+                  setFormData({ ...formData, address: e.target.value })
+                }
+              />
+            </label>
             <label className="form-control w-full">
               <div className="label">
                 <span className="label-text">Email</span>
@@ -114,25 +148,18 @@ export const LoginPage = () => {
             <button
               type="submit"
               className="btn btn-primary w-full"
-              disabled={isLoggingIng}
             >
-              {isLoggingIng ? 
-                <>
-                  <Loader2 className="size-5 animate-spin" />
-                  Loading...
-                </> 
-             : (
-                "Log In"
-              )}
+            Register
             </button>
           </form>
         </div>
         <div className="text-center">
-          <Link to='/signin'>
           <p className="text-base-content/60">
-            Create new Account?{" "}
+            Already have an account?{" "}
+            <Link to="/login" className="link link-primary">
+              Sign In
+            </Link>
           </p>
-          </Link>
         </div>
       </div>
       <AuthImagePattern
