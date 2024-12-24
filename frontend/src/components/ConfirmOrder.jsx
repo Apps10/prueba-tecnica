@@ -1,9 +1,11 @@
 import React, { useEffect, useState } from 'react'
 import { Plus, MinusIcon, X } from "lucide-react";
 import { useOrderStore } from '../redux/hooks/useOrderStore'
+import { usePaymentStore } from '../redux/hooks/usePaymentStore';
 
 export const ConfirmOrderModal = () => {
-  const { productsSelected, clearProductsSelectedAction, setconfirmOrderProductAction } = useOrderStore()
+  const { isPaying, setIsPayingAction } = usePaymentStore()
+  const { productsSelected, clearProductsSelectedAction, setconfirmOrderProductAction, newOrderAction, order  } = useOrderStore()
   const [ productsSelectedLocal, SetproductsSelectedLocal ] = useState(productsSelected);
 
   const GlobalSubtotal = (productsSelectedLocal.reduce((acumulador, producto) => {
@@ -37,6 +39,19 @@ export const ConfirmOrderModal = () => {
   const handleCancel = () =>{
     clearProductsSelectedAction(),
     setconfirmOrderProductAction(false)
+  }
+
+  const handlePay = () =>{
+    try{
+      setIsPayingAction(true)
+      newOrderAction(productsSelectedLocal)
+      
+    }catch(error){
+      console.log(error);
+    }finally{
+      setIsPayingAction(false)
+      clearProductsSelectedAction()
+    }
   }
 
 
@@ -96,7 +111,10 @@ export const ConfirmOrderModal = () => {
               </div>
             </div>
               
-            <button className="w-full bg-indigo-600 hover:bg-indigo-700 text-white font-medium py-3 rounded-lg transition-colors">
+            <button 
+            disabled={isPaying}
+            onClick={handlePay}
+            className="w-full bg-indigo-600 hover:bg-indigo-700 text-white font-medium py-3 rounded-lg transition-colors">
               Checkout
             </button>
 

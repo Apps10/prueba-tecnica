@@ -1,17 +1,25 @@
 import { createAsyncThunk, createSlice } from "@reduxjs/toolkit";
 import { axiosInstance } from "../../lib/axios";
+import Cookies from 'js-cookie';
 
 const initialState = {
   productsSelected: [],
   confirmOrderProduct: false,
+  order: {}
 };
 
 export const newOrder = createAsyncThunk(
   "order/new",
   async (data, { rejectWithValue }) => {
     try {
-      const res = await axiosInstance.post("/order", { items: data });
-      return res.data.body.User;
+      const token = Cookies.get('token')
+      const parsedProducts = data.map(p=> ({...p, productId: p.id}))
+      const res = await axiosInstance.post("/order", { items: parsedProducts }, {
+       headers: {
+          Authorization: 'Bearer '+ token
+        }
+      });
+      return res.data;
     } catch (error) {
       console.error(error);
       return rejectWithValue(null);
@@ -28,7 +36,14 @@ const orderSlice = createSlice({
     },
 
     addProductsSelected(state, action) {
-      state.productsSelected.push(action.payload);
+      const products = JSON.parse(JSON.stringify(state.productsSelected));
+      const index = products.findIndex(p=>p.id == action.payload.id)
+      if(index == -1){
+        state.productsSelected.push(action.payload);
+        return
+      }
+      products[index].quantity +=action.payload.quantity
+      state.productsSelected = products
     },
     setProductsSelected(state, action) {
       state.productsSelected = action.payload;
@@ -51,13 +66,12 @@ const orderSlice = createSlice({
   },
   extraReducers: (builder) => {
     builder
-      .addCase(newOrder.pending, (state) => {
+      .addCase(newOrder.pending, (state, action) => {
         state.isCheckingAuth = true;
       })
       .addCase(newOrder.fulfilled, (state, action) => {
-        state.authUser = action.payload;
-        console.log(action);
         state.isCheckingAuth = false;
+        state.order = action.payload
       })
       .addCase(newOrder.rejected, (state) => {
         state.authUser = null;

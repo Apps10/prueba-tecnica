@@ -2,7 +2,8 @@ import { createSlice } from "@reduxjs/toolkit";
 
 const initialState = {
   creditCard: null,
-  isRegisterCreditCard: false
+  isRegisterCreditCard: false,
+  isPaying: false
 };
 
 
@@ -17,8 +18,11 @@ const paymentSlice = createSlice({
     isRegisterNewCreditCard(state, action) {
       state.isRegisterCreditCard = (action.payload)
     },
+    setIsPaying(state, action) {
+      state.isPaying = action.payload
+    }
   },
 });
 
-export const { addCreditCard, isRegisterNewCreditCard } = paymentSlice.actions;
+export const { addCreditCard, isRegisterNewCreditCard, setIsPaying } = paymentSlice.actions;
 export default paymentSlice.reducer;

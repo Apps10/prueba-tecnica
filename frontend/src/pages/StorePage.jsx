@@ -2,22 +2,21 @@ import React, { useEffect, useState } from "react";
 import { axiosInstance } from "../lib/axios";
 import { ConfirmOrderModal, CreditCardModal } from "../components";
 import { useOrderStore } from "../redux/hooks/useOrderStore";
-import { CloudCog, MinusIcon, Plus, ShoppingCart, CreditCard } from "lucide-react";
+import {  MinusIcon, Plus, ShoppingCart, CreditCard } from "lucide-react";
 import { usePaymentStore } from "../redux/hooks/usePaymentStore";
 import { useAuthStore } from "../redux/hooks/useAuthStore";
-import { Navigate } from "react-router-dom";
+import { useNavigate } from "react-router-dom";
 
 export const StorePage = () => {
-  const { isLoggingIng , loginAction, authUser } = useAuthStore();
+  const { authUser } = useAuthStore();
+  const navigate = useNavigate();
 
   const { 
     addProductsSelectedAction,
-    productsSelected, 
     confirmOrderProduct
   } = useOrderStore()
 
   const { 
-    addCreditCardAction,
     isRegisterCreditCard,
     isRegisterNewCreditCardAction
   } = usePaymentStore()
@@ -60,6 +59,14 @@ export const StorePage = () => {
   useEffect(() => {
     findProducts();
   }, []);
+
+  const handlePayment = (product) =>{
+    if(!authUser) {
+       navigate('/login');
+    }
+    addProductsSelectedAction({...product}); 
+    isRegisterNewCreditCardAction(true)
+  }
 
 
   return (
@@ -118,7 +125,7 @@ export const StorePage = () => {
                 </div>
 
                 <div className="flex gap-2">
-                  <button onClick={()=>{ addProductsSelectedAction({...product}); isRegisterNewCreditCardAction(true) }} className="w-full bg-indigo-600 hover:bg-indigo-700 text-white font-medium py-3 rounded-lg transition-colors col-span-1">
+                  <button onClick={()=>handlePayment(product)} className="w-full bg-indigo-600 hover:bg-indigo-700 text-white font-medium py-3 rounded-lg transition-colors col-span-1">
                   <span className="pl-1 flex gap-2 text-center justify-center items-center">
                     Pagar con Tarjeta <CreditCard/>
                     </span>
@@ -143,7 +150,7 @@ export const StorePage = () => {
         }
 
         {isRegisterCreditCard &&
-          (!authUser) ? <CreditCardModal/> : <Navigate to='/login'/>
+          <CreditCardModal/> 
         }
       </div>
     </div>

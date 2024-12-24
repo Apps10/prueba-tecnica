@@ -6,10 +6,20 @@ import { LoginPage } from './pages/index'
 import { useAuthStore } from './redux/hooks/useAuthStore'
 import { StorePage } from './pages/StorePage'
 import { SignInPage } from './pages/SignInPage'
+import { checkAuth } from './redux/slice/userSlice'
+import { useEffect } from 'react'
 
 
 function App(){
-  const {  authUser } = useAuthStore();
+  const {  authUser, checkAuthAction } = useAuthStore();
+
+  
+  useEffect(()=>{
+    checkAuthAction()
+  },)
+
+
+ 
 
   return (
     <div>
