@@ -45,17 +45,17 @@ export class WPaymentAdapter implements PaymentServicePort {
         Authorization: 'Bearer '+ envs.UAT_SANDBOX_PRIVATE_KEY
       }
     })).data
-    const orderIdNew = orderId+Math.round(Math.random()*1000000) //TODO: reemplazar esta parte
+
     const payloadTransaccion = 
       {
         "amount_in_cents": amount*100, // Monto current centavos
         "currency": "COP", // Moneda
-        "signature": sha256('order-'+orderIdNew+amount*100+"COP"+envs.UAT_SANDBOX_INTEGRITY_KEY), //Firma de integridad
+        "signature": sha256('order-'+orderId+amount*100+"COP"+envs.UAT_SANDBOX_INTEGRITY_KEY), //Firma de integridad
         "customer_email": "example@gmail.com", // Email del usuario,
         "payment_method": {
           "installments": 1 // Número de cuotas si la fuente de pago representa una tarjeta de lo contrario el campo payment_method puede ser ignorado.
         },
-        "reference": 'order-'+orderIdNew, // Referencia única de pago
+        "reference": 'order-'+orderId, // Referencia única de pago
         "payment_source_id": paymentSource.data.id // ID de la fuente de pago
     }  
 

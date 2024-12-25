@@ -3,6 +3,7 @@ import { axiosInstance } from "../../lib/axios";
 import Cookies from 'js-cookie';
 import { payOrder } from "./paymentSlice";
 import { updateStockProductSold } from "./productSlice";
+import toast from "react-hot-toast";
 
 const initialState = {
   productsSelected: [],
@@ -48,8 +49,8 @@ export const newOrder = createAsyncThunk(
         )
       )
     } catch (error) {
-      
-
+      const { message } = error.response.data;
+      toast.error(message);
       console.error(error);
       return rejectWithValue(null);
     }
@@ -111,6 +112,8 @@ const orderSlice = createSlice({
       })
       .addCase(newOrder.rejected, (state) => {
         state.isCheckingAuth = false;
+        state.confirmOrderProduct=false
+        state.productsSelected=[]
       });
 
   },

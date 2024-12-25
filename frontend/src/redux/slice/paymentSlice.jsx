@@ -27,6 +27,8 @@ export const payOrder = createAsyncThunk(
    
       return res.data;
     } catch (error) {
+      const { message } = err.response.data;
+      toast.error(message);
       console.error(error);
       return rejectWithValue(null);
     }
@@ -61,6 +63,7 @@ const paymentSlice = createSlice({
         state.isPayingOrder = false;
       })
       .addCase(payOrder.rejected, (state) => {
+        state.paymentResponse=null
         state.isPayingOrder = false;
         state.isPaying = false
         state.isRegisterNewCreditCardAction=false

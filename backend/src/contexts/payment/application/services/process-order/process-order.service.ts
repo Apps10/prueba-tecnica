@@ -30,22 +30,31 @@ export class ProcessOrderService {
     }, 0)); 
   
     const Total = Math.round(((Subtotal) * 1.09))
-
-
-    const { id, currency, status, created_at, orderId, totalAmount } = await this.paymentService.processPayment({
-      ...processOrderDto,
-      amount: Total
-    });
-
-    if (status == 'APPROVED') {
-      await this.orderServicePort.markOrderAsSold({
-        order,
-        productsDB,
-        paitAt: new Date(created_at),
-        wompiChargeId: id,
+    try{
+      const { id, currency, status, created_at, orderId, totalAmount } = await this.paymentService.processPayment({
+        ...processOrderDto,
+        amount: Total
       });
+      if (status == 'APPROVED') {
+        await this.orderServicePort.markOrderAsSold({
+          order,
+          productsDB,
+          paitAt: new Date(created_at),
+          wompiChargeId: id,
+        });
+      }
+      
+      return { id, currency, status, created_at, orderId, totalAmount }
+    } catch(err){
+      return { 
+        id: "NA", 
+        currency:"COP", 
+        status:"Error: we have a trouble with your pay, please contact with support", 
+        created_at: new Date(), 
+        orderId:order.toJSON().id, 
+        totalAmount: Total
+      }
     }
     
-    return { id, currency, status, created_at, orderId, totalAmount }
   }
 }
