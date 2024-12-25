@@ -4,6 +4,7 @@ import React, { useState } from 'react'
 import { usePaymentStore } from '../redux/hooks/usePaymentStore';
 import { useShippingStore } from "../redux/hooks/useShippingStore";
 import { useOrderStore } from "../redux/hooks/useOrderStore";
+import { useAuthStore } from "../redux/hooks/useAuthStore";
 
 
 
@@ -18,10 +19,28 @@ export const CreditCardModal = () => {
     expDate: "",
     cvv: ""
   } 
-  console.log(decryptCreditCard)
+
+  const  { authUser } = useAuthStore()
   const [creditCardForm, setCreditCardForm] = useState(decryptCreditCard)
 
-  const [shippingInfo, setShippingInfo] = useState(shippingInfoStore)
+  const selectShippingInfo = ()=>{
+    if(
+      !shippingInfoStore.shippName ||
+      !shippingInfoStore.address 
+    ){
+      return {
+        shippName: authUser.fullName,
+        address: authUser.address,
+        city: "",
+        state: "",
+        postalCode: "",
+        contry: ''
+      }
+    }
+    return shippingInfoStore
+  }
+
+  const [shippingInfo, setShippingInfo] = useState(selectShippingInfo())
 
   const HandleCancel = () => {
     clearProductsSelectedAction(); 

@@ -19,7 +19,7 @@ import { OrderReceipt } from "./orderReceipt"
 //   OrderReceipt    OrderReceipt?
 // }
 
-interface PrimitiveOrder{
+export interface PrimitiveOrder{
   id:             string             
   totalAmount:    number
   status:         OrderStatus

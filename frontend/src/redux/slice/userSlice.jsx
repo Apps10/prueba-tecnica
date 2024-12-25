@@ -1,6 +1,7 @@
 import { createAsyncThunk, createSlice } from "@reduxjs/toolkit";
 import { axiosInstance } from "../../lib/axios";
 import toast from "react-hot-toast";
+import Cookies from 'js-cookie';
 
 const initialState = {
   authUser: null,
@@ -13,8 +14,15 @@ export const checkAuth = createAsyncThunk(
   "auth/checkAuth",
   async (_, { rejectWithValue }) => {
     try {
-      const res = await axiosInstance.get("/auth/check");
-      return res.data.body.User;
+      const token = Cookies.get('token')
+
+      if(!token ) return rejectWithValue(null)
+      const res = await axiosInstance.post("/auth/check", {},{
+        headers: {
+          Authorization: 'Bearer '+ token
+        }
+      });
+      return res.data.user;
     } catch (error) {
       console.error(error);
       return rejectWithValue(null);
@@ -22,17 +30,19 @@ export const checkAuth = createAsyncThunk(
   }
 );
 
-export const signup = createAsyncThunk(
-  "auth/signup",
+export const signin = createAsyncThunk(
+  "auth/signin",
   async (data, { rejectWithValue }) => {
     try {
-      const res = await axiosInstance.post("/auth/signup", data);
+      const res = await axiosInstance.post("/auth/signin", data);
+      Cookies.set('token', res.data.token, { expires: 7 })
       toast.success("Register Successfully!!!");
-      return res.data.body.User;
+      return res.data.user;
     } catch (err) {
-        const { error } = err.response.data;
-        toast.error(error);
-        return rejectWithValue(null);
+      const { message } = err.response.data;
+      console.log(message);
+      toast.error(message);
+      return rejectWithValue(null);
     }
   }
 );
@@ -42,6 +52,7 @@ export const logout = createAsyncThunk(
   async (_, { rejectWithValue }) => {
     try {
       toast.success("Logged out successfully");
+      Cookies.remove('token')
       return null;
     } catch (err) {
       const { error } = err.response.data;
@@ -56,11 +67,11 @@ export const login = createAsyncThunk(
   async (data, { rejectWithValue }) => {
     try {
       const res = await axiosInstance.post("/auth/login", data);
+      Cookies.set('token', res.data.token, { expires: 7 })
       toast.success(`Welcome Back ${res.data.user.fullName}!!!`);
       return res.data.user
     } catch (err) {
       const { message } = err.response.data;
-      console.log(err);
       toast.error(message);
       return rejectWithValue(null);
     }
@@ -77,22 +88,21 @@ const authSlice = createSlice({
         state.isCheckingAuth = true;
       })
       .addCase(checkAuth.fulfilled, (state, action) => {
-        state.authUser = action.payload;
-        console.log(action);
+        state.authUser = action.payload
         state.isCheckingAuth = false;
       })
       .addCase(checkAuth.rejected, (state) => {
         state.authUser = null;
         state.isCheckingAuth = false;
       })
-      .addCase(signup.pending, (state) => {
+      .addCase(signin.pending, (state) => {
         state.isSigningUp = true;
       })
-      .addCase(signup.fulfilled, (state, action) => {
+      .addCase(signin.fulfilled, (state, action) => {
         state.authUser = action.payload;
         state.isSigningUp = false;
       })
-      .addCase(signup.rejected, (state) => {
+      .addCase(signin.rejected, (state) => {
         state.authUser = null;
         state.isSigningUp = false;
       })

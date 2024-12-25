@@ -11,6 +11,7 @@ import { AuthImagePattern } from "../components/AuthImagePattern";
 import { useAuthStore } from "../redux/hooks/useAuthStore";
 import toast from "react-hot-toast";
 import Joi from "joi-browser";
+import { Link } from "react-router-dom";
 
 export const LoginPage = () => {
   const { isLoggingIng , loginAction  } = useAuthStore();
@@ -127,10 +128,11 @@ export const LoginPage = () => {
           </form>
         </div>
         <div className="text-center">
+          <Link to='/signin'>
           <p className="text-base-content/60">
             Create new Account?{" "}
-          
           </p>
+          </Link>
         </div>
       </div>
       <AuthImagePattern

@@ -1,11 +1,13 @@
 import { useDispatch, useSelector } from "react-redux";
 import { 
-  ddProductsSelected, 
+  addProductsSelected, 
   clearProductsSelected, 
   deleteProductSelected, 
   updateProductSelected, 
   setProductsSelected, 
-  setconfirmProducts 
+  setconfirmProducts,
+  newOrder,
+  clearAllOrderStore
 } from "../slice/orderSlice";
 
 export const useOrderStore = () => {
@@ -19,6 +21,9 @@ export const useOrderStore = () => {
   const deleteProductSelectedAction = (id) => dispatch(deleteProductSelected(id))
   const updateProductSelectedAction = (data) => dispatch(updateProductSelected(data))
   const setProductsSelectedAction = (data) => dispatch(setProductsSelected(data))
+  const newOrderAction = async (data) => dispatch(newOrder(data))
+  const clearAllOrderStoreAction = async () => dispatch(clearAllOrderStore())
+  
    return {
     productsSelected,
     confirmOrderProduct,
@@ -27,6 +32,8 @@ export const useOrderStore = () => {
     clearProductsSelectedAction,
     deleteProductSelectedAction,
     updateProductSelectedAction,
-    setProductsSelectedAction
+    setProductsSelectedAction,
+    newOrderAction,
+    clearAllOrderStoreAction,
   };
 };

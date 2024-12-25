@@ -31,7 +31,7 @@ export class RegisterUserUseCase {
     await this.userRepository.create(user);
     return {
       token: await this.jwtService.sign({ id: user.id }),
-      user: userExist.toApiJson()
+      user: user.toApiJson()
     };
   }
 }

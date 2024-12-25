@@ -6,6 +6,7 @@ export const Navbar = () => {
 
   const { authUser, logoutAction } = useAuthStore();
 
+
   return (
     <header 
     className="bg-base-100 border-b border-base-300 fixed w-full top-0 

@@ -1,10 +1,14 @@
 import React, { useEffect, useState } from 'react'
-import { Plus, MinusIcon, X } from "lucide-react";
+import { Plus, MinusIcon, X, Loader } from "lucide-react";
 import { useOrderStore } from '../redux/hooks/useOrderStore'
+import { usePaymentStore } from '../redux/hooks/usePaymentStore';
+import { useAuthStore } from '../redux/hooks/useAuthStore';
 
 export const ConfirmOrderModal = () => {
-  const { productsSelected, clearProductsSelectedAction, setconfirmOrderProductAction } = useOrderStore()
+  const { payOrderAction, cryptcreditCard, isPaying, } = usePaymentStore()
+  const { productsSelected, clearProductsSelectedAction, setconfirmOrderProductAction, newOrderAction, order,  } = useOrderStore()
   const [ productsSelectedLocal, SetproductsSelectedLocal ] = useState(productsSelected);
+  const { authUser } = useAuthStore()
 
   const GlobalSubtotal = (productsSelectedLocal.reduce((acumulador, producto) => {
     const subtotal = producto.quantity * producto.price;
@@ -39,11 +43,15 @@ export const ConfirmOrderModal = () => {
     setconfirmOrderProductAction(false)
   }
 
+  const handlePay = async () =>{
+      newOrderAction({productsSelectedLocal, globalTotal, GlobalSubtotal})
+  }
+
 
   if(productsSelected) {
     return (
-      <div className='fixed inset-0 bg-black bg-opacity-30 backdrop:blur-sm flex justify-center items-center'>
-        <div className="min-h-screen bg-gray-100 flex items-center justify-center p-4">
+      <div className='fixed inset-0 bg-black bg-opacity-30 backdrop:blur-sm flex justify-center items-center '>
+        <div className="min-h-screen flex items-center justify-center p-4">
           <div className="max-w-2xl w-full bg-white rounded-xl shadow-lg p-6">
             <h2 className="text-2xl font-bold text-gray-900 mb-6">Shopping Cart</h2>
             
@@ -96,8 +104,13 @@ export const ConfirmOrderModal = () => {
               </div>
             </div>
               
-            <button className="w-full bg-indigo-600 hover:bg-indigo-700 text-white font-medium py-3 rounded-lg transition-colors">
-              Checkout
+            <button 
+            disabled={isPaying}
+            onClick={handlePay}
+            className="w-full bg-indigo-600 hover:bg-indigo-700 text-white font-medium py-3 rounded-lg transition-colors">
+              <span className='flex justify-center gap-2'>Checkout { 
+                isPaying ? <Loader className="animate-spin" /> : ''
+              }</span>  
             </button>
 
             <button onClick={handleCancel} className="w-full bg-warning/70 hover:bg-warning text-white font-medium py-3 rounded-lg transition-colors">

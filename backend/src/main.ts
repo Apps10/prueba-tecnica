@@ -2,6 +2,7 @@ import { NestFactory } from '@nestjs/core';
 import { AppModule } from './app.module';
 import { ValidationPipe } from '@nestjs/common';
 import { CustomExceptionFilter } from './contexts/shared/custom-exception/custom-exception-filter';
+import envs from './contexts/shared/config/envs';
 
 async function bootstrap() {
   const app = await NestFactory.create(AppModule);
@@ -12,10 +13,7 @@ async function bootstrap() {
   }))
 
   app.enableCors({
-    origin: [
-        'http://localhost:3000',
-        'http://localhost:5173',
-    ],
+    origin: true, //TODO: agregar los origenes correctamente
     credentials: true
   })
   app.useGlobalFilters(new CustomExceptionFilter());

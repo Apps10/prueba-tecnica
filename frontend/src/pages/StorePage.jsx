@@ -1,22 +1,27 @@
 import React, { useEffect, useState } from "react";
 import { axiosInstance } from "../lib/axios";
-import { ConfirmOrderModal, CreditCardModal } from "../components";
+import { ConfirmOrderModal, ConfirmPaymentModal, CreditCardModal } from "../components";
 import { useOrderStore } from "../redux/hooks/useOrderStore";
-import { CloudCog, MinusIcon, Plus, ShoppingCart, CreditCard } from "lucide-react";
+import {  MinusIcon, Plus, ShoppingCart, CreditCard } from "lucide-react";
 import { usePaymentStore } from "../redux/hooks/usePaymentStore";
+import { useAuthStore } from "../redux/hooks/useAuthStore";
+import { useNavigate } from "react-router-dom";
+import { useProductStore } from "../redux/hooks/useProducStore";
 
 export const StorePage = () => {
+  const { authUser } = useAuthStore();
+  const navigate = useNavigate();
+  const { findProductsAction, products, setProdutsAction } = useProductStore()
 
   const { 
     addProductsSelectedAction,
-    productsSelected, 
     confirmOrderProduct
   } = useOrderStore()
 
   const { 
-    addCreditCardAction,
     isRegisterCreditCard,
-    isRegisterNewCreditCardAction
+    isRegisterNewCreditCardAction,
+    paymentResponse
   } = usePaymentStore()
 
 
@@ -26,7 +31,7 @@ export const StorePage = () => {
       const index = products.findIndex(p=> p.id == productSelected.id)
       let pl = JSON.parse(JSON.stringify( products));
       pl[index].quantity -= 1
-      setProducts([...pl ])
+      setProdutsAction([...pl ])
     }
   }
   const Sum = (productSelected)=> {
@@ -35,11 +40,10 @@ export const StorePage = () => {
       const index = products.findIndex(p=> p.id == productSelected.id)
       let pl = JSON.parse(JSON.stringify( products));
       pl[index].quantity += 1
-      setProducts([...pl ])
+      setProdutsAction([...pl ])
     }
   }
   
-  const [products, setProducts] = useState([]);
   const [carrito, SetCarrito] = useState([])
   const [pagination, setPagination] = useState({
     currentPage: null,
@@ -47,22 +51,24 @@ export const StorePage = () => {
     totalCount: null,
   });
 
-  const findProducts = async () => {
-    const res = await axiosInstance.get("product");
-    const { Products, metadata } = res.data;
-    setProducts(Products.map(p=>({...p, quantity: 1})));
-    setPagination(metadata);
-  };
-
   useEffect(() => {
-    findProducts();
+    findProductsAction();
   }, []);
+
+  const handlePayment = (product) =>{
+    if(!authUser) {
+       navigate('/login');
+    }
+    addProductsSelectedAction({...product}); 
+    isRegisterNewCreditCardAction(true)
+  }
 
 
   return (
     <div className="min-h-screen bg-gray-100 flex items-center justify-center p-4">
       <div className="pt-12 w-full grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-5 gap-4  overflow ">
         {products.map((product, i) => {
+          if(product.stock<=0) return
           return (
             <div key={product.id} className="max-w-sm w-full bg-white rounded-xl shadow-lg overflow-hidden hover:shadow-xl transition-all">
               <div className="relative ">
@@ -115,7 +121,7 @@ export const StorePage = () => {
                 </div>
 
                 <div className="flex gap-2">
-                  <button onClick={()=>{ addProductsSelectedAction({...product}); isRegisterNewCreditCardAction(true) }} className="w-full bg-indigo-600 hover:bg-indigo-700 text-white font-medium py-3 rounded-lg transition-colors col-span-1">
+                  <button onClick={()=>handlePayment(product)} className="w-full bg-indigo-600 hover:bg-indigo-700 text-white font-medium py-3 rounded-lg transition-colors col-span-1">
                   <span className="pl-1 flex gap-2 text-center justify-center items-center">
                     Pagar con Tarjeta <CreditCard/>
                     </span>
@@ -139,8 +145,12 @@ export const StorePage = () => {
           <ConfirmOrderModal/>
         }
 
-        {isRegisterCreditCard && 
-          <CreditCardModal/>
+        {isRegisterCreditCard &&
+          <CreditCardModal/> 
+        }
+
+        { paymentResponse &&
+          <ConfirmPaymentModal/> 
         }
       </div>
     </div>
