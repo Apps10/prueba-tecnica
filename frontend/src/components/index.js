@@ -1,4 +1,5 @@
 export * from './AuthImagePattern'
 export * from './ConfirmOrder'
+export * from './confirmPayment'
 export * from './CreditCard'
 export * from './Navbar'

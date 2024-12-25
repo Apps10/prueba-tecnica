@@ -16,10 +16,8 @@ function App(){
   
   useEffect(()=>{
     checkAuthAction()
-  },)
+  },[])
 
-
- 
 
   return (
     <div>

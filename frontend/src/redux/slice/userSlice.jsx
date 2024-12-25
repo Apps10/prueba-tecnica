@@ -17,7 +17,6 @@ export const checkAuth = createAsyncThunk(
       const token = Cookies.get('token')
 
       if(!token ) return rejectWithValue(null)
-
       const res = await axiosInstance.post("/auth/check", {},{
         headers: {
           Authorization: 'Bearer '+ token
@@ -89,6 +88,7 @@ const authSlice = createSlice({
         state.isCheckingAuth = true;
       })
       .addCase(checkAuth.fulfilled, (state, action) => {
+        state.authUser = action.payload
         state.isCheckingAuth = false;
       })
       .addCase(checkAuth.rejected, (state) => {

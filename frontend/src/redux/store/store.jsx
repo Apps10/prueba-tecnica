@@ -5,6 +5,7 @@ import authReducer from "../slice/userSlice";
 import orderReducer from "../slice/orderSlice";
 import paymentReducer from "../slice/paymentSlice";
 import shippingReducer from "../slice/shippingSlice";
+import productReducer from "../slice/productSlice";
 
 
 const persistConfig = {
@@ -22,7 +23,8 @@ const store = configureStore({
     auth: AuthpersistedReducer,
     order: orderPersistedReducer,
     payment: paymentReducer,
-    shipping: ShippingPersistedReducer
+    shipping: ShippingPersistedReducer,
+    product: productReducer
   },
 });
 

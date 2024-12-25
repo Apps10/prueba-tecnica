@@ -1,0 +1,50 @@
+services:
+  frontend:
+    build: ./frontend
+    restart: always
+    environment:
+      - VITE_BASE_URL= http://localhost:3000
+    ports: 
+      - 8081:5173
+    volumes: 
+      - ./frontend/src:/usr/src/app/src:cached
+      - ./frontend/public:/usr/src/app/prisma:cached
+    command: npm run dev -- --host
+    
+
+  backend:
+    depends_on: 
+      - backend-db
+    build: ./backend
+    restart: always
+    ports: 
+    - 3000:3000
+    environment:
+      - DATABASE_URL=postgresql://postgres:123456@backend-db:5432/mydb?schema=public
+      - JWT_SECRET="123456789"
+      - UAT_SANDBOX_URL=https://api-sandbox.co.uat.wompi.dev/v1
+      - UAT_SANDBOX_PUBLIC_KEY=pub_stagtest_g2u0HQd3ZMh05hsSgTS2lUV8t3s4mOt7
+      - UAT_SANDBOX_PRIVATE_KEY=prv_stagtest_5i0ZGIGiFcDQifYsXxvsny7Y37tKqFWg
+      - UAT_SANDBOX_INTEGRITY_KEY=stagtest_integrity_nAIBuqayW70XpUqJS4qf4STYiISd89Fp
+      - URL_CORS=http://frontend:5173,http://localhost:8081,http://frontend:5173
+
+    volumes: 
+      - ./backend/src:/usr/src/app/src:cached
+      - ./backend/prisma:/usr/src/app/prisma:cached
+    command: npm run docker:start
+
+
+  backend-db:
+    image: postgres:16.2
+    restart: always
+    environment:
+      - POSTGRES_USER=postgres
+      - POSTGRES_PASSWORD=123456
+      - POSTGRES_DB=mydb
+    volumes: 
+      - ./orders-ms/postgres:/var/lib/postgresql/data:cached
+
+
+
+
+ 

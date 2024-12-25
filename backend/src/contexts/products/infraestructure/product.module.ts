@@ -9,6 +9,8 @@ import { ProductRepository } from '../domain/repositories/product.repository';
 import { FindByIdProductController } from './api/find-by-id/find-by-id-product.controller';
 import { UpdateProductStockController } from './api/update-stock/update-product-stock.controller';
 import { CountAvaliableProductUseCase } from '../application/count-products/count-products-use-case';
+import { ProductRepositoryAdapter } from './adapters/product-repository-adapter';
+import { ProductServicePort } from '../domain/ports/product-service.port';
 
 @Module({
   controllers: [
@@ -17,6 +19,7 @@ import { CountAvaliableProductUseCase } from '../application/count-products/coun
     UpdateProductStockController
   ],
   providers: [
+    ProductRepositoryAdapter,
     FindAllProductsUseCase,
     FindProductByIDUseCase,
     updateProductStockUseCase,
@@ -27,12 +30,15 @@ import { CountAvaliableProductUseCase } from '../application/count-products/coun
       provide: ProductRepository,
       useExisting: ProductSchemaPrisma,
     },
-    
+
   ],
   exports: [
     FindAllProductsUseCase,
     FindProductByIDUseCase,
     updateProductStockUseCase,
+    CountAvaliableProductUseCase,
+    ProductSchemaPrisma,
+    ProductRepositoryAdapter
   ],
 })
 export class ProductModel {}
