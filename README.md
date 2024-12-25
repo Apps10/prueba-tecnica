@@ -22,6 +22,7 @@
 
 
 ## correr con docker
-1. ejecutar el comando: **
+1. ejecutar el comando: **docker compose up -d**
+1. ingresa a **localhost:8081**
 
 ### para mas informacion, ingresar al readme de frontend y backend
