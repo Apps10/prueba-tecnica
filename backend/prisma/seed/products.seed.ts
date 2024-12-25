@@ -61,7 +61,7 @@ const products:PrimitiveProduct[] = [
     "description": "Bocina portátil con sonido estéreo y batería de larga duración.",
     "picture": "https://exitocol.vtexassets.com/arquivos/ids/15300773/parlante-portatil-bocina-1hora-boc060-bluetooth-estereo-fm.jpg?v=638029388318670000",
     "stock": 25,
-    "price": 59.99
+    "price": 59990
   },
   {
     "id": 8,
@@ -69,7 +69,7 @@ const products:PrimitiveProduct[] = [
     "description": "Disco duro portátil de 2TB con conexión USB 3.0.",
     "picture": "https://symcomputadores.com/wp-content/uploads/2022/09/Externo-HDD-4TB.png",
     "stock": 35,
-    "price": 79.99
+    "price": 79990
   },
   {
     "id": 9,
@@ -77,7 +77,7 @@ const products:PrimitiveProduct[] = [
     "description": "Cámara web de alta definición con micrófono incorporado.",
     "picture": "https://resource.logitech.com/w_692,c_lpad,ar_4:3,q_auto,f_auto,dpr_1.0/d_transparent.gif/content/dam/logitech/en/products/webcams/c922/gallery/c922-gallery-1.png?v=1",
     "stock": 60,
-    "price": 39.99
+    "price": 39990
   },
   {
     "id": 10,
@@ -85,7 +85,7 @@ const products:PrimitiveProduct[] = [
     "description": "Reloj inteligente con monitoreo de actividad física y GPS.",
     "picture": "https://tienvir.co/cdn/shop/files/Smarwacubittnegro.jpg?v=1710192872&width=600",
     "stock": 50,
-    "price": 149.99
+    "price": 149990
   },
   {
     "id": 11,
@@ -93,7 +93,7 @@ const products:PrimitiveProduct[] = [
     "description": "Tablet Android con pantalla de 10 pulgadas y 64GB de almacenamiento.",
     "picture": "https://co.tiendasishop.com/cdn/shop/files/IMG-11087963.jpg?v=1723512028&width=823",
     "stock": 20,
-    "price": 199.99
+    "price": 199990
   },
   {
     "id": 12,
@@ -101,7 +101,7 @@ const products:PrimitiveProduct[] = [
     "description": "Silla de oficina ergonómica con soporte lumbar ajustable.",
     "picture": "https://www.sillasparaoficina.top/wp-content/uploads/2019/08/ERGOMESH-PREMIUM-PRESIDENTE4.jpg",
     "stock": 15,
-    "price": 219.99
+    "price": 219990
   },
   {
     "id": 13,
@@ -109,7 +109,7 @@ const products:PrimitiveProduct[] = [
     "description": "Proyector portátil Full HD con conectividad WiFi y Bluetooth.",
     "picture": "https://image.benq.com/is/image/benqco/01-mh733-front30?$ResponsivePreset$&fmt=png-alpha",
     "stock": 10,
-    "price": 349.99
+    "price": 349990
   },
   {
     "id": 14,
@@ -117,7 +117,7 @@ const products:PrimitiveProduct[] = [
     "description": "Cargador inalámbrico rápido para dispositivos compatibles.",
     "picture": "https://http2.mlstatic.com/D_NQ_NP_807622-MCO49630563353_042022-O.webp",
     "stock": 75,
-    "price": 19.99
+    "price": 19990
   },
   {
     "id": 15,
@@ -125,7 +125,7 @@ const products:PrimitiveProduct[] = [
     "description": "Ventilador de torre silencioso con control remoto y 3 velocidades.",
     "picture": "https://www.kalley.com.co/medias/7701023638081-001-750Wx750H?context=bWFzdGVyfGltYWdlc3w0OTQ0MnxpbWFnZS9qcGVnfGFXMWhaMlZ6TDJnek5pOW9Zek12TVRBNU9EWTRNRGczTnpBMU9UQXVhbkJufDBhZTI5NzUxYjcyMTczOTZjZWNjZDgwOTlmNWY2Y2YzNDYzMWU4NmU3YTlmNzk1YmY0YzA4OTM1YjY0NWZjMWE",
     "stock": 30,
-    "price": 59.99
+    "price": 59990
   }
 
 ] 
